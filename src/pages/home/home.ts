@@ -10,6 +10,7 @@ import { SliderPage } from '../../pages/slider/slider';
 export class HomePage {
 
   public hospedagens: any [];
+  public top: any;
 
   constructor(public navCtrl: NavController,
               public hospProvider: HospedagemProvider) {
@@ -31,6 +32,19 @@ export class HomePage {
   
   openSlider(hospedagem) {
     this.navCtrl.push("SliderPage", hospedagem);
+  }
+
+  public favoritar(hospedagem, index) {
+    var email = "zeneto0@gmail.com"
+    var nome = "Neto"
+   
+        this.hospProvider.setFavorito(hospedagem, email, nome)
+          .subscribe((favoritar) => {
+              this.hospedagens[index].valido = !this.hospedagens[index].valido;
+          })
+        
+  
+    console.log("testando");
   }
   
   ionViewDidLoad() {

@@ -18,9 +18,17 @@ export class HospedagemProvider {
 
   public urlBase = "http://localhost:8000"
   public urlHosp = "/hospedagem"
+  public urlFav = "/favoritar/"
+
+  private headers: Headers;
+  private options: RequestOptions;
 
   constructor(public http: Http) {
-    console.log('Hello HospedagemProvider Provider');
+    this.headers = new Headers();   
+    this.headers.append("Accept", "application/json");
+    this.headers.append('Content-Type', 'application/json');
+    this.headers.append('Authorization', 'Token 3f415458979f6273ee9012e448fbb1e7336d1557');
+    this.options = new RequestOptions({headers: this.headers});
   }
 
   getAll(): Observable<any> {
@@ -30,6 +38,24 @@ export class HospedagemProvider {
             .map(this.dataHandler)
            
   }
+
+  setFavorito(id, email, nome) {
+    let params = {  
+      id_hospedagem: id,
+      email: email,
+      nome: nome,
+    }
+    let url = this.urlBase + this.urlHosp + this.urlFav
+    return this.http.post(url, params, this.options)
+      .map(this.dataHandlerPost)
+     
+  }
+
+  private dataHandlerPost (res: Response) {
+    console.log(res);
+    return res.json();
+  }
+
 
   private dataHandler (res: Response) {
     let h = res.json(); 

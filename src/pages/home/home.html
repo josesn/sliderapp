@@ -8,12 +8,16 @@
 
 <ion-content padding>
    
-  <ion-card class="foto-card" *ngFor="let hosp of hospedagens">
+  <ion-card class="foto-card" *ngFor="let hosp of hospedagens; let i = index;">
    
         <img src="{{'data:image/png;base64,' + hosp.foto}}">
         <button *ngIf="hosp.album && hosp.album.length" ion-button clear icon-only (click)="openSlider(hosp)">
             <ion-icon name="favicon"></ion-icon>
-        </button> 
+        </button>
+        <button ion-button clear icon-only isActive="false" (click)="favoritar(hosp.id, i)">
+          <ion-icon *ngIf="!hosp.valido" name="heart-outline" style="color:#e3b04f;"></ion-icon>
+          <ion-icon *ngIf="hosp.valido" name="heart" style="color:#e3b04f;"></ion-icon>
+        </button>
     
   </ion-card>
   
